@@ -184,7 +184,7 @@
 <body class="scheme-dark dark-mode">
     <div id="preview-container">
         <div id="obs-view">
-            <div id="app" class="events-list-wrap" data-show-avatar="true">
+            <div id="app" class="events-list-wrap can-motion" data-show-avatar="true">
                 <div class="event-list" id="danmaku-container">
                     <!-- 弹幕将在这里生成 -->
                 </div>
@@ -204,13 +204,13 @@
                 <input type="checkbox" id="toggle-blue">
             </div>
             <div class="toggle-row">
-                <span>显示头像</span>
-                <input type="checkbox" id="toggle-avatar" checked>
+                <span>动画开关 [can-motion]</span>
+                <input type="checkbox" id="toggle-motion" checked>
             </div>
         </div>
 
         <div class="section">
-            <h2>添加模拟弹幕</h2>
+            <h2>模拟弹幕</h2>
             <div class="btn-group">
                 <button onclick="addMessage('normal')">普通弹幕</button>
                 <button onclick="addMessage('streamer')" style="background: #419f78;">主播弹幕</button>
@@ -218,6 +218,7 @@
                 <button onclick="addMessage('guard2')" style="background: rgb(233, 204, 240); color: #4a1d5f;">提督</button>
                 <button onclick="addMessage('guard3')" style="background: rgb(200, 221, 252); color: #1a1855;">舰长</button>
                 <button onclick="addEmote()">大表情</button>
+                <button onclick="addGift()" style="background: #ff4d4f;">送礼物</button>
             </div>
         </div>
 
@@ -228,7 +229,7 @@
         </div>
 
         <div style="flex: 1;"></div>
-        <p style="font-size: 0.8rem; color: #888;">Laplace Chat Local Tester<br>Powered by Antigravity</p>
+        <p style="font-size: 0.8rem; color: #888;">Laplace Chat Local Tester<br>Structure Synced with CSS</p>
     </div>
 
     <script>
@@ -249,6 +250,7 @@
         function addMessage(type) {
             const name = NAMES[Math.floor(Math.random() * NAMES.length)];
             const text = TEXTS[Math.floor(Math.random() * TEXTS.length)];
+            const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`;
             
             const event = document.createElement('div');
             event.className = 'event event--message';
@@ -258,45 +260,55 @@
             if (type === 'guard2') event.classList.add('guard-level--2');
             if (type === 'guard3') event.classList.add('guard-level--3');
 
-            let metaHtml = `
+            // 匹配用户 CSS 中的结构: .event--message .meta .avatar--sender
+            let msgHtml = `
                 <div class="meta">
-                    <div class="avatar-wrap">
-                        <img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=${name}" />
-                    </div>
+                    <div class="avatar--sender" style="background-image: url('${avatarUrl}');"></div>
                     <span class="username">${name}</span>
                 </div>
+                <div class="message">${processText(text)}</div>
             `;
 
-            let msgHtml = `<div class="message">${text}</div>`;
-            
-            // 处理特殊文本
-            if (text.includes('||')) {
-                const parts = text.split('||');
-                msgHtml = `<div class="message">${parts[0]}<span class="spoiler">${parts[parts.length-2]}</span>${parts[parts.length-1]}</div>`;
-            }
-
-            event.innerHTML = metaHtml + msgHtml;
+            event.innerHTML = msgHtml;
             container.appendChild(event);
             
-            // 自动滚动
             container.scrollTop = container.scrollHeight;
-            
-            // 限制条数
-            if (container.children.length > 50) {
-                container.removeChild(container.firstChild);
+            if (container.children.length > 50) container.removeChild(container.firstChild);
+        }
+
+        function processText(text) {
+            if (text.includes('||')) {
+                const parts = text.split('||');
+                return `${parts[0]}<span class="spoiler">${parts[1]}</span>${parts[2] || ''}`;
             }
+            return text;
+        }
+
+        function addGift() {
+            const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+            const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`;
+            const event = document.createElement('div');
+            event.className = 'event event--gift';
+            event.innerHTML = `
+                <div class="meta">
+                    <div class="avatar--sender" style="background-image: url('${avatarUrl}');"></div>
+                    <span class="username">${name}</span>
+                </div>
+                <div class="message">赠送了 1 个 奶茶</div>
+            `;
+            container.appendChild(event);
+            container.scrollTop = container.scrollHeight;
         }
 
         function addEmote() {
             const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+            const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`;
             const event = document.createElement('div');
             event.className = 'event event--message has-emotes';
             
             event.innerHTML = `
                 <div class="meta">
-                    <div class="avatar-wrap">
-                        <img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=${name}" />
-                    </div>
+                    <div class="avatar--sender" style="background-image: url('${avatarUrl}');"></div>
                     <span class="username">${name}</span>
                 </div>
                 <div class="message">
@@ -313,20 +325,23 @@
 
         let stressTestId = null;
         function startStressTest() {
+            const btn = event.target;
             if (stressTestId) {
                 clearInterval(stressTestId);
                 stressTestId = null;
-                event.target.innerText = '开始自动刷屏';
+                btn.innerText = '开始自动刷屏';
             } else {
                 stressTestId = setInterval(() => {
-                    const types = ['normal', 'normal', 'normal', 'guard3', 'streamer'];
-                    addMessage(types[Math.floor(Math.random() * types.length)]);
-                }, 800);
-                event.target.innerText = '停止自动刷屏';
+                    const types = ['normal', 'normal', 'guard3', 'streamer', 'gift'];
+                    const r = Math.random();
+                    if (r > 0.8) addGift();
+                    else if (r > 0.7) addEmote();
+                    else addMessage(types[Math.floor(Math.random() * types.length)]);
+                }, 1000);
+                btn.innerText = '停止自动刷屏';
             }
         }
 
-        // 各种切换
         document.getElementById('toggle-dark').addEventListener('change', (e) => {
             if (e.target.checked) {
                 document.body.classList.add('scheme-dark', 'dark-mode');
@@ -336,23 +351,19 @@
         });
 
         document.getElementById('toggle-blue').addEventListener('change', (e) => {
-            if (e.target.checked) {
-                app.classList.add('scene-blue');
-            } else {
-                app.classList.remove('scene-blue');
-            }
+            if (e.target.checked) app.classList.add('scene-blue');
+            else app.classList.remove('scene-blue');
         });
 
-        document.getElementById('toggle-avatar').addEventListener('change', (e) => {
-            app.setAttribute('data-show-avatar', e.target.checked);
+        document.getElementById('toggle-motion').addEventListener('change', (e) => {
+            if (e.target.checked) app.classList.add('can-motion');
+            else app.classList.remove('can-motion');
         });
 
-        // 初始化一些弹幕
-        setTimeout(() => {
+        window.onload = () => {
             addMessage('normal');
             addMessage('guard3');
-            addMessage('streamer');
-        }, 100);
+        };
     </script>
 </body>
 </html>
