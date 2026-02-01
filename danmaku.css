@@ -3,6 +3,17 @@
   /* 1. 全局背景透明 */
   body { background-color: rgba(0, 0, 0, 0); }
 
+  /* 全局事件变量 */
+  .event {
+    /* 应用全局自定义字体 */
+    /* --font-sans 为 LAPLACE Chat 内置变量，可调用非衬线字体 */
+    --event-font-family: 'Changa One', var(--font-sans);
+
+    /* 修改此变量可以改变描边颜色，请据直播间配色进行微调 */
+    --shadow-color: #000;
+    --text-shadow: -2px -2px var(--shadow-color), -2px -1px var(--shadow-color), -2px 0px var(--shadow-color), -2px 1px var(--shadow-color), -2px 2px var(--shadow-color), -1px -2px var(--shadow-color), -1px -1px var(--shadow-color), -1px 0px var(--shadow-color), -1px 1px var(--shadow-color), -1px 2px var(--shadow-color), 0px -2px var(--shadow-color), 0px -1px var(--shadow-color), 0px 0px var(--shadow-color), 0px 1px var(--shadow-color), 0px 2px var(--shadow-color), 1px -2px var(--shadow-color), 1px -1px var(--shadow-color), 1px 0px var(--shadow-color), 1px 1px var(--shadow-color), 1px 2px var(--shadow-color), 2px -2px var(--shadow-color), 2px -1px var(--shadow-color), 2px 0px var(--shadow-color), 2px 1px var(--shadow-color), 2px 2px var(--shadow-color);
+  }
+
   /* 2. 核心容器：父级 */
   .event--message {
     --text: #ffffff;
@@ -13,8 +24,8 @@
     flex-direction: column; /* 让右边的内容（名字、气泡）垂直排列 */
     align-items: flex-start; /* 左对齐 */
     
-    /* 【关键】左侧留出 50px 给头像，防止重叠 */
-    padding-left: 50px !important; 
+    /* 【关键】左侧留出 66px 给头像，防止重叠 */
+    padding-left: 56px !important; 
     padding-top: 4px;
     padding-bottom: 8px;
     margin-bottom: 12px;
@@ -29,8 +40,8 @@
     left: 0 !important;
     top: 0 !important;
     
-    width: 42px !important;
-    height: 42px !important;
+    width: 56px !important;
+    height: 56px !important;
     border-radius: 50%;
     
     /* 确保显示 */
@@ -72,12 +83,17 @@
     line-height: 1.2;
     
     /* 名字和左边的间距微调 */
-    margin-left: 4px;
-    
-    /* 黑色强力描边 */
-    text-shadow: 
-      2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
-      1px 1px 3px rgba(0,0,0,0.8);
+    margin-left: 0px;
+    /* 描边 */
+    text-shadow: var(--text-shadow);
+  }
+
+  /* 为用户名增加一定 padding，防止阴影被截断 */
+  .username-text {
+    padding-left: calc(var(--1px) * 2);
+    padding-right: calc(var(--1px) * 2);
+    margin-left: calc(var(--1px) * -2);
+    margin-right: calc(var(--1px) * -2);
   }
 
   /* 6. 消息气泡 */
@@ -98,7 +114,7 @@
     filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
     word-break: break-all;
     
-    margin: 0 !important; /* 清除外边距 */
+    margin-left: 6px;
   }
   
   /* 7. 礼物全白修正 */
