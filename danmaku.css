@@ -38,8 +38,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     will-change: transform;
   }
 
-  .event--gift {
-    --text: #ffffff;
+  .event--gift.event-size--normal {
+    padding-left: 2px;
   }
 
   /* 全局事件动效果 */
