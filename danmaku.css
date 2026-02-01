@@ -104,8 +104,8 @@
     /* 样式 */
     background-color: var(--bg);
     color: var(--text);
-    padding: 8px 12px;
-    border-radius: 16px;
+    padding: 8px 16px;
+    border-radius: 32px;
     border-top-left-radius: 2px; /* 指向头像的角 */
     
     font-weight: bold;
