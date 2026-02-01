@@ -20,7 +20,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 2. 核心容器：父级 */
-  .event--message {
+  .event--message,
+  .event--gift {
     --text: #ffffff;
     --bg: #53545c;
     
@@ -29,7 +30,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     flex-direction: column; /* 让右边的内容（名字、气泡）垂直排列 */
     align-items: flex-start; /* 左对齐 */
     
-    /* 【关键】左侧留出 66px 给头像，防止重叠 */
+    /* 【关键】左侧留出 56px 给头像，防止重叠 */
     padding-left: 56px !important; 
     padding-top: 4px;
     padding-bottom: 8px;
@@ -38,9 +39,35 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     will-change: transform;
   }
 
+  /* 全局事件动效果 */
+  .can-motion .event:nth-last-child(-n+2) {
+    animation: eventIn .6s ease;
+  }
+
+  /* 总督变量 */
+  .event--message.guard-level--1 {
+    --bg: rgb(233, 88, 110);
+  }
+
+  /* 提督变量 */
+  .event--message.guard-level--2 {
+    --bg: rgb(159, 102, 173);
+  }
+
+  /* 舰长变量 */
+  .event--message.guard-level--3 {
+    --bg: rgb(87, 117, 227);
+  }
+
+  /* 主播变量 */
+  .event--message.user-type--streamer {
+    --bg: rgb(180, 94, 54);
+  }
+
   /* 3. 头像：从 .meta 里“抓”出来 */
   /* 你的 HTML 里，真正的头像在 .meta .sender-avatar 里面 */
-  .event--message .meta .avatar--sender {
+  .event--message .meta .avatar--sender,
+  .event--gift .meta .avatar--sender {
     position: absolute !important; /* 强制脱离文档流 */
     left: 2px !important;
     top: 0 !important;
@@ -59,15 +86,20 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 隐藏 HTML 里其他多余的头像占位符，防止重影 */
-  .event--message > .avatar-wrap, 
+  .event--message > .avatar-wrap,
+  .event--gift > .avatar-wrap,
   .event--message .avatar-alt-outer,
+  .event--gift .avatar-alt-outer,
   .event--message .avatar-alt-top,
-  .event--message .avatar-alt-bottom {
+  .event--gift .avatar-alt-top,
+  .event--message .avatar-alt-bottom,
+  .event--gift .avatar-alt-bottom {
     display: none !important;
   }
 
   /* 4. Meta 容器：包含名字和等级 */
-  .event--message .meta {
+  .event--message .meta,
+  .event--gift .meta {
     display: flex !important;
     align-items: center; /* 名字和等级垂直居中 */
     margin-bottom: 4px !important; /* 名字和气泡的间距 */
@@ -78,13 +110,14 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 5. 用户名样式 */
-  .event--message .username {
+  .event--message .username,
+  .event--gift .username {
     display: block !important;
     
     /* 字体样式 */
     color: #ffffff !important;
     font-weight: 900 !important; /* 特粗 */
-    font-size: 20px !important;  /* 稍微大一点，你看情况调 */
+    /* font-size: 20px !important; */
     line-height: 1.2;
     
     /* 名字和左边的间距微调 */
@@ -102,7 +135,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 6. 消息气泡 */
-  .event--message .message {
+  .event--message .message,
+  .event--gift .message {
     position: relative;
     display: inline-block !important; /* 根据文字自动宽 */
     
@@ -134,7 +168,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 8. 气泡小三角 */
-  .event--message .message::before {
+  .event--message .message::before,
+  .event--gift .message::before {
     content: "";
     position: absolute;
     top: 0;
