@@ -79,25 +79,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     height: 56px !important;
     border-radius: 50%;
     
-    /* 确保显示 */
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    
     filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
     z-index: 10;
-  }
-
-  /* 隐藏 HTML 里其他多余的头像占位符，防止重影 */
-  .event--message > .avatar-wrap,
-  .event--gift > .avatar-wrap,
-  .event--message .avatar-alt-outer,
-  .event--gift .avatar-alt-outer,
-  .event--message .avatar-alt-top,
-  .event--gift .avatar-alt-top,
-  .event--message .avatar-alt-bottom,
-  .event--gift .avatar-alt-bottom {
-    display: none !important;
   }
 
   /* 4. Meta 容器：包含名字和等级 */
@@ -166,7 +149,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   .event--gift * {
       color: #ffffff !important;
       --text: #ffffff !important;
-      text-shadow: 1px 1px 0 #000;
+      /* 描边 */
+      text-shadow: var(--text-shadow);
   }
 
   /* 8. 气泡小三角 */
