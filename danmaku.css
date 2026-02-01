@@ -42,7 +42,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   /* 你的 HTML 里，真正的头像在 .meta .sender-avatar 里面 */
   .event--message .meta .avatar--sender {
     position: absolute !important; /* 强制脱离文档流 */
-    left: 0 !important;
+    left: 2px !important;
     top: 0 !important;
     
     width: 56px !important;
