@@ -180,4 +180,34 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
+
+  /* 11. 表情样式优化 */
+  /* 增大表情尺寸 */
+  .emote-wrap {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .emote {
+    width: 256px !important;
+    height: 256px !important;
+    object-fit: contain;
+  }
+
+  /* 当消息只包含表情时，去掉气泡框 */
+  /* 检测：如果 .message 只有一个 .emote-wrap 子元素 */
+  .event--message .message:has(> .emote-wrap:only-child),
+  .event--message .message:has(> .emote-wrap:first-child:last-of-type) {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    filter: none !important;
+    margin-left: 0 !important;
+  }
+
+  /* 隐藏纯表情消息的小三角 */
+  .event--message .message:has(> .emote-wrap:only-child)::before,
+  .event--message .message:has(> .emote-wrap:first-child:last-of-type)::before {
+    display: none !important;
+  }
 }
