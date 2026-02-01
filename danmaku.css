@@ -79,11 +79,6 @@
       2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
       1px 1px 3px rgba(0,0,0,0.8);
   }
-  
-  /* 隐藏用户等级（如果不需要显示等级，可以保留这行，如果需要显示就把 display: none 删掉） */
-  .event--message .user-level {
-     display: none !important; 
-  }
 
   /* 6. 消息气泡 */
   .event--message .message {
@@ -144,7 +139,4 @@
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
-  
-  /* 隐藏勋章等多余元素，保持干净 */
-  .fans-medal, .guard-badge { display: none !important; }
 }
