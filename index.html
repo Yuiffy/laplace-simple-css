@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laplace Danmaku Tester - 弹幕机本地测试</title>
+    <link rel="stylesheet" href="danmaku.css">
+    <style>
+        :root {
+            --panel-bg: rgba(255, 255, 255, 0.8);
+            --panel-text: #333;
+            --accent: #419f78;
+            --bg-grid: #e5e5e5;
+            --1px: 1px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --event-line-height: 32px;
+            --avatar-size: 32px;
+            --bg-color: #ffffff;
+        }
+
+        body.dark-mode {
+            --panel-bg: rgba(30, 30, 30, 0.9);
+            --panel-text: #eee;
+            --bg-grid: #222;
+            --bg-color: #121212;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-sans);
+            height: 100vh;
+            display: flex;
+            background-color: var(--bg-grid);
+            background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode {
+            background-image: radial-gradient(circle, #333 1px, transparent 1px);
+        }
+
+        /* 模拟 OBS 预览区 */
+        #preview-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        #obs-view {
+            width: 400px;
+            height: 800px;
+            background: transparent;
+            border: 2px dashed #888;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* 控制面板 */
+        #controls {
+            width: 350px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(0,0,0,0.1);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: var(--panel-text);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        h2 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        .section {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 15px;
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button:active { transform: translateY(0); }
+        button.secondary { background: #666; }
+        button.outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        /* 模拟 Laplace Chat 的结构 */
+        .events-list-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* 基础样式补全 */
+        .event {
+            font-family: var(--event-font-family);
+            line-height: var(--event-line-height);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event--message {
+            position: relative;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: visible;
+            position: relative;
+            flex-shrink: 0;
+            background: #ddd;
+        }
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+        .scheme-dark .username { color: #ccc; }
+
+        .guard-badge-in-meta {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+        }
+
+        /* Laplace Chat 默认属性 */
+        [data-show-avatar="false"] .avatar-wrap { display: none; }
+
+    </style>
+</head>
+<body class="scheme-dark dark-mode">
+    <div id="preview-container">
+        <div id="obs-view">
+            <div id="app" class="events-list-wrap" data-show-avatar="true">
+                <div class="event-list" id="danmaku-container">
+                    <!-- 弹幕将在这里生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="controls">
+        <div class="section">
+            <h2>全局控制</h2>
+            <div class="toggle-row">
+                <span>深色模式</span>
+                <input type="checkbox" id="toggle-dark" checked>
+            </div>
+            <div class="toggle-row">
+                <span>蓝色场景 [scene:blue]</span>
+                <input type="checkbox" id="toggle-blue">
+            </div>
+            <div class="toggle-row">
+                <span>显示头像</span>
+                <input type="checkbox" id="toggle-avatar" checked>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>添加模拟弹幕</h2>
+            <div class="btn-group">
+                <button onclick="addMessage('normal')">普通弹幕</button>
+                <button onclick="addMessage('streamer')" style="background: #419f78;">主播弹幕</button>
+                <button onclick="addMessage('guard1')" style="background: rgb(253, 213, 186); color: #3d1817;">总督</button>
+                <button onclick="addMessage('guard2')" style="background: rgb(233, 204, 240); color: #4a1d5f;">提督</button>
+                <button onclick="addMessage('guard3')" style="background: rgb(200, 221, 252); color: #1a1855;">舰长</button>
+                <button onclick="addEmote()">大表情</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>批量测试</h2>
+            <button class="outline" style="width: 100%;" onclick="startStressTest()">开始自动刷屏</button>
+            <button class="secondary" style="width: 100%; margin-top: 8px;" onclick="clearDanmaku()">清空弹幕</button>
+        </div>
+
+        <div style="flex: 1;"></div>
+        <p style="font-size: 0.8rem; color: #888;">Laplace Chat Local Tester<br>Powered by Antigravity</p>
+    </div>
+
+    <script>
+        const container = document.getElementById('danmaku-container');
+        const app = document.getElementById('app');
+
+        const NAMES = ['明前奶绿', 'Laplace', '折棒爷', '运气选手', '测试用户', '超管'];
+        const TEXTS = [
+            '这就是新的气泡样式吗？好漂亮！',
+            '测试弹幕 123456',
+            '主播贴贴！',
+            '今天天气真不错',
+            'Laplace Chat 赛高！',
+            '这里是长弹幕测试，看看自动换行和气泡拉伸的效果如何。',
+            '这是一条带剧透的消息 ||剧透内容||'
+        ];
+
+        function addMessage(type) {
+            const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+            const text = TEXTS[Math.floor(Math.random() * TEXTS.length)];
+            
+            const event = document.createElement('div');
+            event.className = 'event event--message';
+            
+            if (type === 'streamer') event.classList.add('user-type--streamer');
+            if (type === 'guard1') event.classList.add('guard-level--1');
+            if (type === 'guard2') event.classList.add('guard-level--2');
+            if (type === 'guard3') event.classList.add('guard-level--3');
+
+            let metaHtml = `
+                <div class="meta">
+                    <div class="avatar-wrap">
+                        <img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=${name}" />
+                    </div>
+                    <span class="username">${name}</span>
+                </div>
+            `;
+
+            let msgHtml = `<div class="message">${text}</div>`;
+            
+            // 处理特殊文本
+            if (text.includes('||')) {
+                const parts = text.split('||');
+                msgHtml = `<div class="message">${parts[0]}<span class="spoiler">${parts[parts.length-2]}</span>${parts[parts.length-1]}</div>`;
+            }
+
+            event.innerHTML = metaHtml + msgHtml;
+            container.appendChild(event);
+            
+            // 自动滚动
+            container.scrollTop = container.scrollHeight;
+            
+            // 限制条数
+            if (container.children.length > 50) {
+                container.removeChild(container.firstChild);
+            }
+        }
+
+        function addEmote() {
+            const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+            const event = document.createElement('div');
+            event.className = 'event event--message has-emotes';
+            
+            event.innerHTML = `
+                <div class="meta">
+                    <div class="avatar-wrap">
+                        <img class="avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=${name}" />
+                    </div>
+                    <span class="username">${name}</span>
+                </div>
+                <div class="message">
+                    <img class="emote emote--large" src="https://rsrc.laplace.cn/assets/emotes/bilibili/2233/33fans.png" />
+                </div>
+            `;
+            container.appendChild(event);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearDanmaku() {
+            container.innerHTML = '';
+        }
+
+        let stressTestId = null;
+        function startStressTest() {
+            if (stressTestId) {
+                clearInterval(stressTestId);
+                stressTestId = null;
+                event.target.innerText = '开始自动刷屏';
+            } else {
+                stressTestId = setInterval(() => {
+                    const types = ['normal', 'normal', 'normal', 'guard3', 'streamer'];
+                    addMessage(types[Math.floor(Math.random() * types.length)]);
+                }, 800);
+                event.target.innerText = '停止自动刷屏';
+            }
+        }
+
+        // 各种切换
+        document.getElementById('toggle-dark').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('scheme-dark', 'dark-mode');
+            } else {
+                document.body.classList.remove('scheme-dark', 'dark-mode');
+            }
+        });
+
+        document.getElementById('toggle-blue').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                app.classList.add('scene-blue');
+            } else {
+                app.classList.remove('scene-blue');
+            }
+        });
+
+        document.getElementById('toggle-avatar').addEventListener('change', (e) => {
+            app.setAttribute('data-show-avatar', e.target.checked);
+        });
+
+        // 初始化一些弹幕
+        setTimeout(() => {
+            addMessage('normal');
+            addMessage('guard3');
+            addMessage('streamer');
+        }, 100);
+    </script>
+</body>
+</html>
