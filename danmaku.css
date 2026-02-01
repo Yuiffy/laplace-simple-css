@@ -103,7 +103,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     /* 字体样式 */
     color: #ffffff !important;
     font-weight: 900 !important; /* 特粗 */
-    /* font-size: 20px !important; */
+    font-size: 24px !important;
     line-height: 1.2;
     
     /* 名字和左边的间距微调 */
@@ -186,12 +186,27 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   .emote-wrap {
     display: inline-block;
     vertical-align: middle;
+    /* 为缩放留出空间 */
+    line-height: 0;
   }
   
   .emote {
-    width: 256px !important;
-    height: 256px !important;
+    /* 强制最小尺寸 */
+    min-height: 96px !important;
+    height: 168px !important;
+    width: 168px !important;
+    
+    /* 图像缩放模式 */
     object-fit: contain;
+    
+    /* 强制图像放大，使用平滑插值 */
+    image-rendering: -webkit-optimize-contrast; /* Webkit */
+    image-rendering: crisp-edges; /* 标准 */
+    image-rendering: pixelated; /* 像素风格，可选 */
+    
+    /* 如果还想更大，可以用 transform 二次放大 */
+    /* transform: scale(1.5); */ /* 取消注释可以在 256px 基础上再放大 1.5 倍 */
+    /* transform-origin: left center; */ /* 从左侧中心开始缩放 */
   }
 
   /* 当消息只包含表情时，去掉气泡框 */
