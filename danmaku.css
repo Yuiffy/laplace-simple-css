@@ -20,8 +20,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 2. 核心容器：父级 */
-  .event--message,
-  .event--gift {
+  .event--message {
     --text: #ffffff;
     --bg: #53545c;
     
@@ -37,6 +36,10 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     margin-bottom: 12px;
     
     will-change: transform;
+  }
+
+  .event--gift {
+    --text: #ffffff;
   }
 
   /* 全局事件动效果 */
@@ -135,8 +138,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 6. 消息气泡 */
-  .event--message .message,
-  .event--gift .message {
+  .event--message .message {
     position: relative;
     display: inline-block !important; /* 根据文字自动宽 */
     
@@ -168,8 +170,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 8. 气泡小三角 */
-  .event--message .message::before,
-  .event--gift .message::before {
+  .event--message .message::before {
     content: "";
     position: absolute;
     top: 0;
