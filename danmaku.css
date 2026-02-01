@@ -1,249 +1,150 @@
-/* LAPLACE 气泡 × 明前奶绿 by LAPLACE Chat */
-/*
-  支持的自定义场景：
-    - [scene:blue] 适配明前奶绿夜的亡灵场景配色
- */
-/* 引入 Google Fonts 字体，理论上国内可以直接访问 */
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+/* 基于 HTML 结构的终极适配版 */
+@layer template {
+  /* 1. 全局背景透明 */
+  body { background-color: rgba(0, 0, 0, 0); }
 
-@layer custom-css {
-
-  /* 全局背景透明，可保证 OBS 载入弹幕机的过程中背景全程透明 */
-  body {
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  /* 全局事件变量 */
-  .event {
-    /* 应用全局自定义字体 */
-    /* --font-sans 为 LAPLACE Chat 内置变量，可调用非衬线字体 */
-    --event-font-family: 'Jost', var(--font-sans);
-  }
-
-  /* 弹幕自定义样式 */
+  /* 2. 核心容器：父级 */
   .event--message {
-    --text: #213d2b;
-    --bg: #f1fbf5;
+    --text: #ffffff;
+    --bg: #53545c;
+    
+    position: relative; /* 【关键】作为绝对定位的参照物 */
+    display: flex;      /* 使用 Flex 布局 */
+    flex-direction: column; /* 让右边的内容（名字、气泡）垂直排列 */
+    align-items: flex-start; /* 左对齐 */
+    
+    /* 【关键】左侧留出 50px 给头像，防止重叠 */
+    padding-left: 50px !important; 
+    padding-top: 4px;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    
+    will-change: transform;
   }
 
-  /* 蓝色场景变量 */
-  .scene-blue {
-    --event-username-text-0: #d0c5dd;
-    --event-danmaku-streamer-text: rgb(254, 220, 230);
+  /* 3. 头像：从 .meta 里“抓”出来 */
+  /* 你的 HTML 里，真正的头像在 .meta .sender-avatar 里面 */
+  .event--message .meta .avatar--sender {
+    position: absolute !important; /* 强制脱离文档流 */
+    left: 0 !important;
+    top: 0 !important;
+    
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50%;
+    
+    /* 确保显示 */
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+    z-index: 10;
   }
 
-  .scene-blue .event--message {
-    --text: rgb(203, 183, 227);
-    --bg: rgba(203, 183, 227, 0.25);
+  /* 隐藏 HTML 里其他多余的头像占位符，防止重影 */
+  .event--message > .avatar-wrap, 
+  .event--message .avatar-alt-outer,
+  .event--message .avatar-alt-top,
+  .event--message .avatar-alt-bottom {
+    display: none !important;
   }
 
-  /* 总督变量 */
-  .event--message.guard-level--1 {
-    --text: rgb(61, 24, 23);
-    --bg: rgb(253, 213, 186);
-    --cross-deco: url(https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-1.svg);
+  /* 4. Meta 容器：包含名字和等级 */
+  .event--message .meta {
+    display: flex !important;
+    align-items: center; /* 名字和等级垂直居中 */
+    margin-bottom: 4px !important; /* 名字和气泡的间距 */
+    
+    /* 清除原本可能存在的 padding */
+    padding: 0 !important;
+    background: none !important;
   }
 
-  .scene-blue .event--message.guard-level--1 {
-    --text: rgb(255, 168, 168);
-    --bg: rgba(255, 152, 161, 0.25);
+  /* 5. 用户名样式 */
+  .event--message .username {
+    display: block !important;
+    
+    /* 字体样式 */
+    color: #ffffff !important;
+    font-weight: 900 !important; /* 特粗 */
+    font-size: 20px !important;  /* 稍微大一点，你看情况调 */
+    line-height: 1.2;
+    
+    /* 名字和左边的间距微调 */
+    margin-left: 4px;
+    
+    /* 黑色强力描边 */
+    text-shadow: 
+      2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000,
+      1px 1px 3px rgba(0,0,0,0.8);
+  }
+  
+  /* 隐藏用户等级（如果不需要显示等级，可以保留这行，如果需要显示就把 display: none 删掉） */
+  .event--message .user-level {
+     display: none !important; 
   }
 
-  /* 提督变量 */
-  .event--message.guard-level--2 {
-    --text: rgb(74, 29, 95);
-    --bg: rgb(233, 204, 240);
-    --cross-deco: url(https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-2.svg);
-  }
-
-  .scene-blue .event--message.guard-level--2 {
-    --text: rgb(241, 185, 255);
-    --bg: rgba(255, 176, 244, 0.25);
-  }
-
-  /* 舰长变量 */
-  .event--message.guard-level--3 {
-    --text: rgb(26, 24, 85);
-    --bg: rgb(200, 221, 252);
-    --cross-deco: url(https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-3.svg);
-  }
-
-  .scene-blue .event--message.guard-level--3 {
-    --text: rgb(182, 211, 255);
-    --bg: rgba(146, 190, 255, 0.25);
-  }
-
-  /* 主播变量 */
-  .event--message.user-type--streamer {
-    --text: rgb(255, 255, 255);
-    --bg: rgb(65, 159, 120);
-  }
-
-  .scene-blue .event--message.user-type--streamer {
-    --text: rgb(50, 32, 72);
-    --bg: var(--event-danmaku-streamer-text);
-  }
-
-  /* 为事件增加一个全局的渐变，可在调用 OBS API 时增加颜色渐变效果，使场景切换时看上去没那么突兀 */
-  .event {
-    transition: .4s color ease, .4s background-color ease;
-  }
-
-  /* 当主题为暗色时，为用户名增加一个阴影，以保证在大部分深色背景的游戏场景遇到白色背景时依然可以看清用户名 */
-  .scheme-dark .event--system,
-  .scheme-dark .event--superchat,
-  .scheme-dark .event--user-block,
-  .scheme-dark .event--live-cutoff,
-  .scheme-dark .event--toast .content,
-  .scheme-dark .event--gift .content,
-  .scheme-dark .event--like-click .username,
-  .scheme-dark .event--interaction .username,
-  .scheme-dark .event--message .username {
-    text-shadow: 0 0 2px var(--bg-color), 0 0 2px var(--bg-color), 0 0 2px var(--bg-color);
-  }
-
-  .scene-blue .avatar-wrap::after {
-    --size: var(--avatar-size, var(--event-line-height));
-    --factor: 1.6;
-    /* 取消注释开启头像装饰 */
-    /* content: ''; */
-    display: block;
-    position: absolute;
-    top: calc((var(--size) * var(--factor) - var(--size)) / -2);
-    left: calc((var(--size) * var(--factor) - var(--size)) / -2);
-    z-index: 1;
-    width: calc(var(--size) * var(--factor));
-    height: calc(var(--size) * var(--factor));
-    background: var(--cross-deco);
-    background-size: contain;
-  }
-
-  /* 防止深色模式下礼物事件中的粉丝勋章出现阴影 */
-  .fans-medal {
-    text-shadow: none;
-  }
-
-  /* 弹幕正文改为聊天泡泡样式 */
+  /* 6. 消息气泡 */
   .event--message .message {
-    --margin-top: 2;
-    --margin-left: 28;
     position: relative;
-    display: block;
-    margin-top: calc(var(--1px) * var(--margin-top));
-    margin-left: calc(var(--1px) * var(--margin-left));
-    padding: calc(var(--1px) * 8) calc(var(--1px) * 14);
-    color: var(--text);
+    display: inline-block !important; /* 根据文字自动宽 */
+    
+    /* 样式 */
     background-color: var(--bg);
-    width: fit-content;
-    min-width: 3em;
-    border-radius: calc(var(--1px) * 18);
-    filter: drop-shadow(0 0 1px currentColor);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 16px;
+    border-top-left-radius: 2px; /* 指向头像的角 */
+    
     font-weight: bold;
+    font-size: inherit; /* 继承 URL 设置的字体大小 */
+    
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+    word-break: break-all;
+    
+    margin: 0 !important; /* 清除外边距 */
+  }
+  
+  /* 7. 礼物全白修正 */
+  .event--gift,
+  .event--gift .meta,
+  .event--gift .username,
+  .event--gift .message,
+  .event--gift * {
+      color: #ffffff !important;
+      --text: #ffffff !important;
+      text-shadow: 1px 1px 0 #000;
   }
 
-  /* 剧透弹幕兼容 */
-  .event--message .message.spoiler {
-    filter: drop-shadow(0 0 1px currentColor) blur(5px);
-  }
-
-  .event--message .message.spoiler:hover {
-    filter: drop-shadow(0 0 1px currentColor);
-  }
-
-  /* 蓝色半透明背景与 filter 不兼容 */
-  .scene-blue .event--message .message {
-    filter: none;
-    padding: calc(var(--1px) * 6) calc(var(--1px) * 10);
-  }
-
-  /* 优化蓝色场景时的消息尺寸 */
-  .scene-blue .event--message:not(.has-emotes):not(.guard-level--0) .message {
-    --margin-top: 4;
-    --margin-left: 30;
-
-    padding: calc(var(--1px) * 2) calc(var(--1px) * 8);
-    /* 当下方消息装饰开启时请取消注释 */
-    /* padding-right: calc(var(--1px) * 30); */
-    margin-bottom: calc(var(--1px) * 4);
-    border: calc(var(--1px) * 2) solid transparent;
-  }
-
-  .scene-blue .event--message:not(.has-emotes):not(.guard-level--0) .message::before {
-    /* 取消下列注释开启消息右侧装饰 */
-    /* content: '';
-    display: block;
-    position: absolute;
-    width: calc(var(--1px) * 24);
-    height: calc(var(--1px) * 24);
-    right: calc(var(--1px) * 4);
-    top: calc(var(--1px) * 2);
-    background-color: var(--text);
-    -wekbit-mask-image: var(--cross-deco);
-    mask-image: var(--cross-deco);
-    -webkit-mask-size: calc(var(--1px) * 24);
-    mask-size: calc(var(--1px) * 24);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat; */
-  }
-
-  .scene-blue .guard-badge-in-meta {
-    background-image: none;
-    background-color: var(--text);
-    -webkit-mask-image: var(--cross-deco);
-    mask-image: var(--cross-deco);
-    -webkit-mask-size: calc(var(--1px) * 24);
-    mask-size: calc(var(--1px) * 24);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-  }
-
-  /* 通过伪类实现双层描边 */
-  .scene-blue .event--message:not(.has-emotes):not(.guard-level--0) .message::after {
-    --offset: calc(var(--1px) * -6);
-    content: '';
-    display: block;
-    position: absolute;
-    top: var(--offset);
-    left: var(--offset);
-    right: var(--offset);
-    bottom: var(--offset);
-    border-radius: calc(var(--1px) * 22);
-    border: calc(var(--1px) * 2) solid var(--bg);
-  }
-
-  /* 去掉大表情消息边框 */
-  .event--message.has-emotes .message {
-    background-color: transparent;
-    padding: 0;
-    filter: none;
-  }
-
-  /* 为聊天泡泡增加尾巴，半透明会导致箭头颜色叠加，因此不要应用于 [scene:blue] */
-  .events-list-wrap:not(.scene-blue) .event--message:not(.has-emotes) .message::before {
+  /* 8. 气泡小三角 */
+  .event--message .message::before {
     content: "";
-    display: inline-block;
     position: absolute;
-    top: calc(var(--1px) * -5);
-    left: calc(var(--1px) * -12);
-    border: calc(var(--1px) * 10) solid transparent;
-    border-right: calc(var(--1px) * 18) solid var(--bg);
-    transform: rotate(40deg);
+    top: 0;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 0;
+    border-color: transparent var(--bg) transparent transparent;
   }
 
-  /* 放大表情尺寸 */
-  .event--message .emote {
-    max-height: calc(var(--event-line-height) * 2);
+  /* 9. 进场动画 */
+  @keyframes eventIn {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
   }
-
-  /* 为自定义大表情固定高度，防止 OBS 模式滚动时显示不全 */
-  .event--message .emote.emote--large {
-    min-height: calc(var(--event-line-height) * 2);
+  .can-motion .event:nth-last-child(-n+2) {
+    animation: eventIn .5s ease-out;
   }
-
-  /* 一个简易的渐变淡出效果，可以让组件边缘看起来没那么突兀 */
+  
+  /* 10. 去掉底部渐变 */
   .event-list {
-    --offset: 30px;
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) var(--offset), rgba(0, 0, 0, 1) calc(100% - var(--offset)), rgba(0, 0, 0, 0));
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) var(--offset), rgba(0, 0, 0, 1) calc(100% - var(--offset)), rgba(0, 0, 0, 0));
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
   }
+  
+  /* 隐藏勋章等多余元素，保持干净 */
+  .fans-medal, .guard-badge { display: none !important; }
 }
