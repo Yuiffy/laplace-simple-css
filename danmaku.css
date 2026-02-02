@@ -25,7 +25,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-username-text-3: #ffffff;
     --event-username-text-streamer: #ffffff;
 
-    /* 礼物背景颜色变量 - 设置为 99% 不透明度 */
+    /* 大礼物背景颜色变量 - 设置为 99% 不透明度 */
     --event-gift-bg-1: rgba(55, 126, 224, 0.99);
     --event-gift-bg-2: rgba(82, 183, 67, 0.99);
     --event-gift-bg-3: rgba(255, 208, 67, 0.99);
@@ -33,13 +33,6 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-gift-bg-5: rgba(242, 68, 68, 0.99);
     --event-gift-bg-6: rgba(160, 0, 51, 0.99);
     
-    /* 普通礼物背景颜色变量 - 设置为 99% 不透明度 */
-    --event-gift-normal-bg-1: rgba(55, 126, 224, 0.99);
-    --event-gift-normal-bg-2: rgba(82, 183, 67, 0.99);
-    --event-gift-normal-bg-3: rgba(255, 208, 67, 0.99);
-    --event-gift-normal-bg-4: rgba(255, 145, 41, 0.99);
-    --event-gift-normal-bg-5: rgba(242, 68, 68, 0.99);
-    --event-gift-normal-bg-6: rgba(160, 0, 51, 0.99);
 
     /* 醒目留言（SC）背景颜色变量 - 设置为 99% 不透明度 */
     --event-superchat-top-bg-1: rgba(16, 67, 255, 0.99);
@@ -57,7 +50,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-superchat-bg-5: rgba(209, 59, 42, 0.99);
     --event-superchat-bg-6: rgba(167, 16, 16, 0.99);
 
-    /* 舰长（Toast）背景颜色变量 - 设置为 99% 不透明度 */
+    /* 上舰的卡片（Toast）背景颜色变量 - 设置为 99% 不透明度 */
     --event-toast-text: rgb(0, 0, 0);
     --event-toast-text-1: rgb(140, 0, 0);
     --event-toast-text-2: rgb(118, 18, 152);
@@ -193,7 +186,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     margin-left: 6px;
   }
   
-  /* 7. 礼物全白修正 */
+  /* 7. 小礼物（白色字带描边，无背景色） */
   .event--gift,
   .event--gift .meta,
   .event--gift .username,
