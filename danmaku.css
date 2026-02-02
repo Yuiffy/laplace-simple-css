@@ -208,6 +208,80 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       text-shadow: var(--text-shadow);
   }
 
+  /* 8. 气泡小三角 */
+  .event--message .message::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 0;
+    border-color: transparent var(--bg) transparent transparent;
+  }
+
+  /* 9. 进场动画 */
+  @keyframes eventIn {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  .can-motion .event:nth-last-child(-n+2) {
+    animation: eventIn .5s ease-out;
+  }
+  
+  /* 10. 去掉底部渐变 */
+  .event-list {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  /* 11. 表情样式优化 */
+  /* 增大表情尺寸 */
+  .emote-wrap {
+    display: inline-block;
+    vertical-align: middle;
+    /* 为缩放留出空间 */
+    line-height: 0;
+  }
+  
+  .emote {
+    /* 强制最小尺寸 */
+    min-height: 96px !important;
+    height: 128px !important;
+    width: 128px !important;
+    
+    /* 图像缩放模式 */
+    object-fit: contain;
+    
+    /* 强制图像放大，使用平滑插值 */
+    image-rendering: -webkit-optimize-contrast; /* Webkit */
+    image-rendering: crisp-edges; /* 标准 */
+    image-rendering: pixelated; /* 像素风格，可选 */
+    
+    /* 如果还想更大，可以用 transform 二次放大 */
+    /* transform: scale(1.5); */ /* 取消注释可以在 256px 基础上再放大 1.5 倍 */
+    /* transform-origin: left center; */ /* 从左侧中心开始缩放 */
+  }
+
+  /* 当消息只包含表情时，去掉气泡框 */
+  /* 检测：如果 .message 只有一个 .emote-wrap 子元素 */
+  .event--message .message:has(> .emote-wrap:only-child),
+  .event--message .message:has(> .emote-wrap:first-child:last-of-type) {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    filter: none !important;
+    margin-left: 0 !important;
+  }
+
+  /* 隐藏纯表情消息的小三角 */
+  .event--message .message:has(> .emote-wrap:only-child)::before,
+  .event--message .message:has(> .emote-wrap:first-child:last-of-type)::before {
+    display: none !important;
+  }
+
+  
   /* ========== 通用光泽特效系统 ========== */
   
   /* 为所有重要事件添加基础样式 */
@@ -224,7 +298,6 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   .event--gift.event-size--normal::after,
   .event--gift.event-size--highlight::after,
   .event--toast::after,
-  .event--superchat::after,
   .event--system::after {
     content: "";
     position: absolute;
@@ -301,18 +374,34 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     animation-duration: 2.2s;
   }
 
-  /* SC：红金渐变，最快最亮 */
-  .event--superchat::after {
+  /* SC：红金渐变光泽，仅上半部分 */
+  /* 为 .top 添加定位上下文 */
+  .event--superchat .top {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* .top 的光泽效果 */
+  .event--superchat .top::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
     background: linear-gradient(90deg, 
       rgba(255, 100, 50, 0) 0%, 
       rgba(255, 200, 100, 0.5) 25%, 
       rgba(255, 255, 255, 0.9) 50%, 
       rgba(255, 200, 100, 0.5) 75%, 
       rgba(255, 100, 50, 0) 100%);
-    width: 70%;
-    animation-duration: 1.8s;
+    transform: skewX(-25deg);
+    animation: shine 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 100;
   }
 
+  /* SC 外发光效果 */
   .event--superchat::before {
     inset: -4px;
     filter: blur(12px);
@@ -320,88 +409,81 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     animation-duration: 1.8s;
   }
 
-  /* 系统提示：蓝色光泽，较慢 */
-  .event--system::after {
-    background: linear-gradient(90deg, 
-      rgba(100, 150, 255, 0) 0%, 
-      rgba(150, 200, 255, 0.4) 25%, 
-      rgba(200, 230, 255, 0.6) 50%, 
-      rgba(150, 200, 255, 0.4) 75%, 
-      rgba(100, 150, 255, 0) 100%);
-    width: 50%;
-    animation-duration: 3s;
+  /* ========== 只狼风格 SC 出场动画 ========== */
+  
+  /* SC 出场动画：白光闪现 + 缩放 */
+  .can-motion .event--superchat:nth-last-child(-n+2) {
+    animation: sekiroFlash 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* 8. 气泡小三角 */
-  .event--message .message::before {
-    content: "";
+  /* 白光闪现动画 */
+  @keyframes sekiroFlash {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+      filter: brightness(3) saturate(0);
+    }
+    30% {
+      opacity: 1;
+      filter: brightness(2.5) saturate(0.3);
+    }
+    50% {
+      filter: brightness(1.8) saturate(0.6);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: brightness(1) saturate(1);
+    }
+  }
+
+  /* "危" 字提示效果 - 使用伪元素 */
+  .can-motion .event--superchat:nth-last-child(-n+2)::before {
+    content: "危";
     position: absolute;
-    top: 0;
-    left: -6px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 10px 10px 0;
-    border-color: transparent var(--bg) transparent transparent;
-  }
-
-  /* 9. 进场动画 */
-  @keyframes eventIn {
-    0% { opacity: 0; transform: translateX(-20px); }
-    100% { opacity: 1; transform: translateX(0); }
-  }
-  .can-motion .event:nth-last-child(-n+2) {
-    animation: eventIn .5s ease-out;
-  }
-  
-  /* 10. 去掉底部渐变 */
-  .event-list {
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-
-  /* 11. 表情样式优化 */
-  /* 增大表情尺寸 */
-  .emote-wrap {
-    display: inline-block;
-    vertical-align: middle;
-    /* 为缩放留出空间 */
-    line-height: 0;
-  }
-  
-  .emote {
-    /* 强制最小尺寸 */
-    min-height: 96px !important;
-    height: 128px !important;
-    width: 128px !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     
-    /* 图像缩放模式 */
-    object-fit: contain;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(255, 0, 0, 0.9);
+    text-shadow: 
+      0 0 20px rgba(255, 0, 0, 1),
+      0 0 40px rgba(255, 0, 0, 0.8),
+      0 0 60px rgba(255, 0, 0, 0.6),
+      -3px -3px 0 #000,
+      3px -3px 0 #000,
+      -3px 3px 0 #000,
+      3px 3px 0 #000;
     
-    /* 强制图像放大，使用平滑插值 */
-    image-rendering: -webkit-optimize-contrast; /* Webkit */
-    image-rendering: crisp-edges; /* 标准 */
-    image-rendering: pixelated; /* 像素风格，可选 */
+    z-index: 200;
+    pointer-events: none;
     
-    /* 如果还想更大，可以用 transform 二次放大 */
-    /* transform: scale(1.5); */ /* 取消注释可以在 256px 基础上再放大 1.5 倍 */
-    /* transform-origin: left center; */ /* 从左侧中心开始缩放 */
+    animation: dangerFlash 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* 当消息只包含表情时，去掉气泡框 */
-  /* 检测：如果 .message 只有一个 .emote-wrap 子元素 */
-  .event--message .message:has(> .emote-wrap:only-child),
-  .event--message .message:has(> .emote-wrap:first-child:last-of-type) {
-    background-color: transparent !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    filter: none !important;
-    margin-left: 0 !important;
-  }
-
-  /* 隐藏纯表情消息的小三角 */
-  .event--message .message:has(> .emote-wrap:only-child)::before,
-  .event--message .message:has(> .emote-wrap:first-child:last-of-type)::before {
-    display: none !important;
+  /* "危" 字闪现动画 */
+  @keyframes dangerFlash {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    20% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.3);
+    }
+    40% {
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    60% {
+      opacity: 0.6;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
   }
 }
