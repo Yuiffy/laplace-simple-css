@@ -187,13 +187,23 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
   
   /* 7. 小礼物（白色字带描边，无背景色） */
-  .event--gift,
-  .event--gift .meta,
-  .event--gift .username,
-  .event--gift .message,
-  .event--gift * {
+  .event--gift.event-size--normal,
+  .event--gift.event-size--normal .meta,
+  .event--gift.event-size--normal .username,
+  .event--gift.event-size--normal .message,
+  .event--gift.event-size--normal * {
       color: #ffffff !important;
       --text: #ffffff !important;
+      /* 描边 */
+      text-shadow: var(--text-shadow);
+  }
+
+  /* 大礼物 */
+  .event--gift.event-size--highlight,
+  .event--gift.event-size--highlight .meta,
+  .event--gift.event-size--highlight .username,
+  .event--gift.event-size--highlight .message,
+  .event--gift.event-size--highlight * {
       /* 描边 */
       text-shadow: var(--text-shadow);
   }
