@@ -405,15 +405,15 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     animation-duration: 9.2s;
   }
 
-  /* SC：红金渐变光泽，仅上半部分 */
+  /* SC：红金渐变光泽，仅上半部分 (排除置顶) */
   /* 为 .top 添加定位上下文 */
-  .event--superchat .top {
+  .event--superchat:not(.event-show-as--sticky) .top {
     position: relative;
     overflow: hidden;
   }
 
   /* .top 的光泽效果 */
-  .event--superchat .top::after {
+  .event--superchat:not(.event-show-as--sticky) .top::after {
     content: "";
     position: absolute;
     top: 0;
@@ -432,8 +432,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     z-index: 100;
   }
 
-  /* SC 外发光效果 */
-  .event--superchat::before {
+  /* SC 外发光效果 (排除置顶) */
+  .event--superchat:not(.event-show-as--sticky)::before {
     inset: -4px;
     filter: blur(12px);
     opacity: 0.7;
