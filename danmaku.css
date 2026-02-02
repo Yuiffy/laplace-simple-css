@@ -225,22 +225,4 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   .event--message .message:has(> .emote-wrap:first-child:last-of-type)::before {
     display: none !important;
   }
-  /* 12. 大礼物（Highlight）卡片样式 */
-  .event-size--highlight,
-  .event-size--highlight .content {
-    /* 设置背景为很不透明 (1% 透明 = 99% 不透明) */
-    background-color: rgba(0, 0, 0, 0.99) !important;
-    
-    /* 卡片基础外观优化 */
-    border-radius: 12px !important;
-    padding: 10px !important;
-    margin-bottom: 8px !important;
-  }
-
-  /* 修正大礼物内部的间距，防止内容太挤 */
-  .event-size--highlight .top {
-    display: flex !important;
-    align-items: center;
-    gap: 8px;
-  }
 }
