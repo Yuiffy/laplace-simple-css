@@ -446,7 +446,9 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* "危" 字提示效果 - 使用 ::after 避免与外发光冲突 */
-  .can-motion .event--superchat:nth-last-child(-n+2)::after {
+  /* 对多个指定 UID 的用户显示"危"字（纯 CSS 实现） */
+  .can-motion .event--superchat[data-uid="14279"]:nth-last-child(-n+2)::after,
+  .can-motion .event--superchat[data-uid="412141275"]:nth-last-child(-n+2)::after {
     content: "危";
     position: fixed; /* 使用 fixed 确保不受父元素影响 */
     top: 50%;
