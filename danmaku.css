@@ -208,6 +208,136 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       text-shadow: var(--text-shadow);
   }
 
+  /* ========== 礼物光泽特效 ========== */
+  
+  /* 小礼物：添加白色光泽扫过效果 */
+  .event--gift.event-size--normal {
+    position: relative;
+    overflow: hidden; /* 隐藏溢出的光泽 */
+  }
+
+  .event--gift.event-size--normal::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 25%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.3) 75%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    animation: shineSmallGift 2.5s ease-in-out infinite;
+    pointer-events: none; /* 不影响点击 */
+    z-index: 100;
+  }
+
+  /* 大礼物：添加金色光泽扫过效果 */
+  .event--gift.event-size--highlight {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .event--gift.event-size--highlight::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 215, 0, 0) 0%,
+      rgba(255, 235, 100, 0.4) 20%,
+      rgba(255, 255, 200, 0.8) 50%,
+      rgba(255, 235, 100, 0.4) 80%,
+      rgba(255, 215, 0, 0) 100%
+    );
+    transform: skewX(-25deg);
+    animation: shineBigGift 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* 小礼物光泽动画 */
+  @keyframes shineSmallGift {
+    0% {
+      left: -100%;
+    }
+    20% {
+      left: -100%;
+    }
+    50% {
+      left: 120%;
+    }
+    100% {
+      left: 120%;
+    }
+  }
+
+  /* 大礼物光泽动画（更快更频繁） */
+  @keyframes shineBigGift {
+    0% {
+      left: -100%;
+    }
+    15% {
+      left: -100%;
+    }
+    45% {
+      left: 120%;
+    }
+    100% {
+      left: 120%;
+    }
+  }
+
+  /* 增强大礼物的视觉效果：添加脉冲光晕 */
+  .event--gift.event-size--highlight::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: inherit;
+    filter: blur(8px);
+    opacity: 0.6;
+    animation: giftPulse 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* 脉冲动画 */
+  @keyframes giftPulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.02);
+    }
+  }
+
+  /* 为礼物添加边框光效（可选） */
+  .event--gift.event-size--highlight {
+    box-shadow: 
+      0 0 10px rgba(255, 215, 0, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.2),
+      inset 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .event--gift.event-size--normal {
+    box-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.2),
+      inset 0 0 8px rgba(255, 255, 255, 0.05);
+  }
+
   /* 8. 气泡小三角 */
   .event--message .message::before {
     content: "";
