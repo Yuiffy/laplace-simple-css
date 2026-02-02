@@ -1,0 +1,246 @@
+/* 引导模版 by LAPLACE Chat */
+/*
+  🛑本模版为引导模版，包含大多数的 CSS 变量定义，您可在当前模版的基础上通过修改 CSS 对样式进行自定义
+  LAPLACE Chat 的编辑器为 VS Code 同款编辑器，支持颜色可视化取色，快捷键也与 VS Code 一致，可直接在编辑器中设计样式
+  编辑的内容会自动保存在本地，页面刷新后可自动恢复
+
+  被注释掉的属性可按 ctrl - /（Windows）或者 command - /（macOS）取消注释
+ */
+
+/* 引入 Google Fonts 字体，理论上国内可以直接访问 */
+/* 更多字形可通过访问 https://fonts.google.com/ 进行挑选 */
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* 请根据实际的载入场景选择使用 remote-css 或 custom-css 层叠层 */
+@layer custom-css {
+  /* 创建弹幕专用变量 */
+  .event {
+    /* 以下为平台内置变量 */
+    /* 应用全局自定义字体 */
+    /* --font-sans 为 LAPLACE Chat 内置变量，可调用非衬线字体 */
+    --event-font-family: 'Jost', var(--font-sans);
+
+    /* 弹幕文本颜色 */
+    /* --event-message-text: red; */
+    /* 也可以套用内置变量，该变量会自动根据深色模式自动调整颜色 */
+    /* --event-message-color: var(--text-color); */
+
+    /* 在这里重新定义普通弹幕、总督、提督、舰长用户名的文本颜色 */
+    --event-username-text-0: #037456;
+    --event-username-text-1: rgb(242, 118, 109);
+    --event-username-text-2: rgb(185, 81, 220);
+    --event-username-text-3: rgb(67, 114, 255);
+
+    /* 弹幕颜色变量 */
+    --event-danmaku-text: rgb(0, 0, 0);
+    --event-danmaku-text-0: rgb(30, 101, 58);
+    --event-danmaku-text-1: rgb(182, 10, 39);
+    --event-danmaku-text-2: rgb(123, 16, 111);
+    --event-danmaku-text-3: rgb(23, 70, 158);
+    --event-danmaku-bg-0: rgba(114, 255, 140, 0.193);
+    --event-danmaku-bg-1: rgba(254, 60, 96, 0.13);
+    --event-danmaku-bg-2: rgba(248, 97, 246, 0.138);
+    --event-danmaku-bg-3: rgba(0, 132, 255, 0.175);
+    --event-danmaku-current-rank-text: rgb(0, 0, 0);
+    --event-danmaku-current-rank-text-1: rgb(96, 62, 3);
+    --event-danmaku-current-rank-text-2: rgb(63, 70, 87);
+    --event-danmaku-current-rank-text-3: rgb(101, 54, 20);
+    --event-danmaku-current-rank-bg-1: rgb(255, 207, 50);
+    --event-danmaku-current-rank-bg-2: rgb(203, 203, 207);
+    --event-danmaku-current-rank-bg-3: rgb(233, 180, 147);
+    --event-danmaku-mod-text: rgb(102, 105, 185);
+    --event-danmaku-streamer-text: rgb(191, 120, 192);
+
+    /* 醒目留言颜色变量 */
+    --event-superchat-top-text: #000000;
+    --event-superchat-top-text-1: rgb(8, 22, 146);
+    --event-superchat-top-text-2: rgb(6, 81, 127);
+    --event-superchat-top-text-3: rgb(154, 111, 19);
+    --event-superchat-top-text-4: rgb(164, 82, 31);
+    --event-superchat-top-text-5: rgb(146, 17, 8);
+    --event-superchat-top-text-6: rgb(127, 9, 46);
+    --event-superchat-top-bg-1: rgba(16, 67, 255, 0.368);
+    --event-superchat-top-bg-2: rgba(16, 167, 255, 0.368);
+    --event-superchat-top-bg-3: rgba(255, 235, 16, 0.368);
+    --event-superchat-top-bg-4: rgba(255, 124, 16, 0.368);
+    --event-superchat-top-bg-5: rgba(255, 40, 16, 0.368);
+    --event-superchat-top-bg-6: rgba(255, 16, 64, 0.368);
+    --event-superchat-message-text: rgb(255, 255, 255);
+    --event-superchat-message-text-1: rgb(225, 234, 255);
+    --event-superchat-message-text-2: rgb(225, 252, 255);
+    --event-superchat-message-text-3: rgb(255, 251, 225);
+    --event-superchat-message-text-4: rgb(255, 237, 225);
+    --event-superchat-message-text-5: rgb(255, 226, 225);
+    --event-superchat-message-text-6: rgb(255, 221, 229);
+    --event-superchat-bg: transparent;
+    --event-superchat-bg-1: rgb(48, 42, 209);
+    --event-superchat-bg-2: rgb(32, 137, 194);
+    --event-superchat-bg-3: rgb(221, 159, 36);
+    --event-superchat-bg-4: rgb(209, 117, 42);
+    --event-superchat-bg-5: rgb(209, 59, 42);
+    --event-superchat-bg-6: rgb(167, 16, 16);
+
+    /* 礼物颜色变量 */
+    --event-gift-text: rgb(0, 0, 0);
+    --event-gift-text-1: rgb(239, 242, 255);
+    --event-gift-text-2: rgb(220, 255, 233);
+    --event-gift-text-3: rgb(99, 69, 0);
+    --event-gift-text-4: rgb(255, 247, 241);
+    --event-gift-text-5: rgb(255, 243, 243);
+    --event-gift-text-6: rgb(255, 226, 230);
+    --event-gift-bg-1: rgb(55, 126, 224);
+    --event-gift-bg-2: rgb(82, 183, 67);
+    --event-gift-bg-3: rgb(255, 208, 67);
+    --event-gift-bg-4: rgb(255, 145, 41);
+    --event-gift-bg-5: rgb(242, 68, 68);
+    --event-gift-bg-6: rgb(160, 0, 51);
+    --event-gift-normal-text-1: rgb(29, 82, 155);
+    --event-gift-normal-text-2: rgb(44, 141, 29);
+    --event-gift-normal-text-3: rgb(180, 140, 21);
+    --event-gift-normal-text-4: rgb(231, 125, 25);
+    --event-gift-normal-text-5: rgb(181, 34, 34);
+    --event-gift-normal-text-6: rgb(150, 9, 54);
+    --event-gift-normal-bg-1: transparent;
+    --event-gift-normal-bg-2: transparent;
+    --event-gift-normal-bg-3: transparent;
+    --event-gift-normal-bg-4: transparent;
+    --event-gift-normal-bg-5: transparent;
+    --event-gift-normal-bg-6: transparent;
+
+    /* 舰长颜色变量 */
+    --event-toast-text: rgb(0, 0, 0);
+    --event-toast-text-1: rgb(140, 0, 0);
+    --event-toast-text-2: rgb(118, 18, 152);
+    --event-toast-text-3: rgb(0, 56, 146);
+    --event-toast-bg-1: rgb(255, 185, 187);
+    --event-toast-bg-2: rgb(250, 187, 255);
+    --event-toast-bg-3: rgb(192, 216, 255);
+
+    /* MVP（守护圣法师、etc）颜色变量 */
+    --event-mvp-text: rgb(0, 0, 0);
+    --event-mvp-text-1: rgb(114, 79, 47);
+    --event-mvp-text-2: rgb(114, 79, 47);
+    --event-mvp-text-3: rgb(114, 79, 47);
+    --event-mvp-text-4: rgb(114, 79, 47);
+    --event-mvp-text-5: rgb(114, 79, 47);
+    --event-mvp-text-6: rgb(114, 79, 47);
+    --event-mvp-bg-1: rgb(229, 211, 183);
+    --event-mvp-bg-2: rgb(229, 211, 183);
+    --event-mvp-bg-3: rgb(229, 211, 183);
+    --event-mvp-bg-4: rgb(229, 211, 183);
+    --event-mvp-bg-5: rgb(229, 211, 183);
+    --event-mvp-bg-6: rgb(229, 211, 183);
+
+    /* 互动颜色变量 */
+    --event-interaction-text-enter: rgb(127, 137, 159);
+    --event-interaction-text-follow: rgb(219, 113, 7);
+    --event-interaction-text-share: rgb(174, 85, 207);
+    --event-interaction-text-follow-special: rgb(217, 50, 50);
+    --event-interaction-text-follow-mutual: rgb(47, 142, 219);
+
+    /* 系统颜色变量 */
+    --event-system-text: rgba(35, 34, 37, 0.553);
+
+    /* 禁言颜色变量 */
+    --event-user-block-text: #fff;
+    --event-user-block-bg: rgb(255, 0, 0);
+  }
+
+  /* 弹幕类型变量 */
+  .event--message {
+    /* --avatar-size: 18px; */
+  }
+
+  /* 总督变量 */
+  .event.guard-level--1 {
+  }
+
+  /* 提督变量 */
+  .event.guard-level--2 {
+  }
+
+  /* 舰长变量 */
+  .event.guard-level--3 {
+  }
+
+  /* 弹幕事件样式 */
+  .event--message {
+  }
+
+  /* 弹幕事件中的消息样式 */
+  .event--message .message {
+  }
+
+  /* 粉丝勋章样式 */
+  .event--message .fans-medal {
+  }
+
+  /* 粉丝勋章名称样式 */
+  .event--message .fans-medal-content {
+  }
+
+  /* 粉丝勋章等级样式 */
+  .event--message .fans-medal-level {
+  }
+
+  /* 修改「榜1」图标 */
+  /* 变量定义可从 https://master--60f5c0ae4a7e3f003ba05641.chromatic.com/ 查看 */
+  .event--message .current-rank {
+  }
+
+  /* 修改房管图标 */
+  .event--message .mod-badge {
+  }
+
+  /* 舰长事件样式 */
+  /*
+    .event-show-as--normal 将排除置顶礼物条
+    .event-show-as--sticky 用于置顶礼物条
+    */
+  .event--toast.event-show-as--normal {
+  }
+
+  /* 礼物事件样式 */
+  /*
+    .event-size--highlight 将排除非高亮礼物事件
+    .event-size--normal 用于非高亮事件
+    */
+  .event--gift.event-show-as--normal.event-size--highlight {
+  }
+
+  /* SC 样式 */
+  /* SC 颜色分为上下两个部分，因此需要单独定义背景 */
+  .event--superchat.event-show-as--normal {
+  }
+
+  /* SC 上方样式 */
+  .event--superchat.event-show-as--normal .top {
+  }
+
+  /* SC 下方正文样式 */
+  .event--superchat.event-show-as--normal .message {
+  }
+
+  /* 礼物/SC文本颜色变量 */
+  /*
+    此处可使用 .event-superchat-rank--[n] 和 .event-gift-rank--[n] 分别定义样式，
+    也可以像我这样使用 .event-price-rank--[n] 统一定义样式
+    */
+  .event.event-price-rank--1 {
+  }
+
+  .event.event-price-rank--2 {
+  }
+
+  .event.event-price-rank--3 {
+  }
+
+  .event.event-price-rank--4 {
+  }
+
+  .event.event-price-rank--5 {
+  }
+
+  .event.event-price-rank--6 {
+  }
+}

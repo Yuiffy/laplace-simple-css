@@ -1,6 +1,6 @@
 /*
-url用这个：
-https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&colorScheme=dark&connectionMode=direct&limitEventAmount=50&limitStickyAmount=10&loginSyncServer=&loginSyncToken=3cpphrBGif6HLwFKmFiuBY%402Np5gkX4dfz52hmxUaPwkc&showAutoDanmaku=false&showAvatar=true&showAvatarFrame=false&showCurrentRank=false&showDanmaku=true&showEnterEvent=false&showEnterEventCurrentGuardOnly=false&showFollowEvent=false&showGift=true&showGiftEffect=true&showGiftFree=false&showGiftHighlightAbove=29.99&showGiftPriceAbove=0.1&showGiftStickyAbove=29.99&showGuardBadge=false&showLottery=true&showMedal=false&showMedalLightenedOnly=false&showModBadge=true&showPhoneNotVerified=false&showRedEnvelop=true&showStickyBar=true&showSuperChat=true&showSystemMessage=true&showToast=true&showUsername=true&showWealthMedal=false&useCst=false
+url用这个（也可以自行去laplace获取，记得【样式-基准字号】要设为28）：
+https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&colorScheme=dark&connectionMode=direct&limitEventAmount=50&limitStickyAmount=10&loginSyncServer=&loginSyncToken=3cpphrBGif6HLwFKmFiuBY%402Np5gkX4dfz52hmxUaPwkc&showAutoDanmaku=false&showAvatar=true&showAvatarFrame=false&showCurrentRank=false&showDanmaku=true&showEnterEvent=false&showEnterEventCurrentGuardOnly=false&showFollowEvent=false&showGift=true&showGiftEffect=true&showGiftEffectAbove=15&showGiftFree=false&showGiftHighlightAbove=29.99&showGiftPriceAbove=0.5&showGiftStickyAbove=29.99&showGuardBadge=false&showLottery=true&showMedal=true&showMedalLightenedOnly=false&showModBadge=true&showPhoneNotVerified=false&showRedEnvelop=true&showStickyBar=true&showSuperChat=true&showSystemMessage=true&showToast=true&showUsername=true&showWealthMedal=false&useCst=false
 */
 
 /* 基于 HTML 结构的终极适配版 */
@@ -17,6 +17,13 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     /* 修改此变量可以改变描边颜色，请据直播间配色进行微调 */
     --shadow-color: #000;
     --text-shadow: -2px -2px var(--shadow-color), -2px -1px var(--shadow-color), -2px 0px var(--shadow-color), -2px 1px var(--shadow-color), -2px 2px var(--shadow-color), -1px -2px var(--shadow-color), -1px -1px var(--shadow-color), -1px 0px var(--shadow-color), -1px 1px var(--shadow-color), -1px 2px var(--shadow-color), 0px -2px var(--shadow-color), 0px -1px var(--shadow-color), 0px 0px var(--shadow-color), 0px 1px var(--shadow-color), 0px 2px var(--shadow-color), 1px -2px var(--shadow-color), 1px -1px var(--shadow-color), 1px 0px var(--shadow-color), 1px 1px var(--shadow-color), 1px 2px var(--shadow-color), 2px -2px var(--shadow-color), 2px -1px var(--shadow-color), 2px 0px var(--shadow-color), 2px 1px var(--shadow-color), 2px 2px var(--shadow-color);
+
+    /* 弹幕用户名颜色变量 */
+    --event-username-text-0: #ffffff;
+    --event-username-text-1: #ffffff;
+    --event-username-text-2: #ffffff;
+    --event-username-text-3: #ffffff;
+    --event-username-text-streamer: #ffffff;
 
     /* 礼物背景颜色变量 - 设置为 99% 不透明度 */
     --event-gift-bg-1: rgba(55, 126, 224, 0.99);
@@ -58,6 +65,10 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-toast-bg-1: rgba(255, 185, 187, 0.99);
     --event-toast-bg-2: rgba(250, 187, 255, 0.99);
     --event-toast-bg-3: rgba(192, 216, 255, 0.99);
+
+    /* 状态映射：将等级和身份映射到通用内部变量 */
+    --bg: var(--event-danmaku-bg-0);
+    --user-color: var(--event-username-text-0);
   }
 
   /* 2. 核心容器：父级 */
@@ -142,7 +153,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     display: block !important;
     
     /* 字体样式 */
-    color: #ffffff !important;
+    color: var(--user-color) !important;
     font-weight: 900 !important; /* 特粗 */
     font-size: 24px !important;
     line-height: 1.2;
