@@ -111,22 +111,22 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
 
   /* 总督变量 */
   .event--message.guard-level--1 {
-    --bg: rgb(233, 88, 110);
+    --bg: rgb(232, 93, 93);
   }
 
   /* 提督变量 */
   .event--message.guard-level--2 {
-    --bg: rgb(159, 102, 173);
+    --bg: rgb(195, 118, 214);
   }
 
   /* 舰长变量 */
   .event--message.guard-level--3 {
-    --bg: rgb(87, 117, 227);
+    --bg: rgb(74, 92, 209);
   }
 
   /* 主播变量 */
   .event--message.user-type--streamer {
-    --bg: rgb(180, 94, 54);
+    --bg: rgb(236, 0, 0);
   }
 
   /* 3. 头像：从 .meta 里“抓”出来 */
@@ -346,7 +346,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     background: inherit;
     filter: blur(10px);
     opacity: 0.5;
-    animation: pulse 2.5s ease-in-out infinite;
+    animation: pulse 8.4s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
   }
@@ -378,7 +378,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       rgba(255, 255, 200, 0.8) 50%, 
       rgba(255, 235, 100, 0.5) 75%, 
       rgba(255, 215, 0, 0) 100%);
-    animation-duration: 2s;
+    animation-duration: 3.9s;
   }
 
   /* 上舰：彩虹渐变 */
@@ -390,7 +390,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       rgba(250, 187, 255, 0.6) 65%, 
       rgba(255, 185, 187, 0) 100%);
     width: 70%;
-    animation-duration: 2.2s;
+    animation-duration: 5.2s;
   }
 
   /* SC：红金渐变光泽，仅上半部分 */
