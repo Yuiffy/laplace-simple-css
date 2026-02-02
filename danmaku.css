@@ -442,8 +442,10 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
 
   /* ========== 只狼风格 SC 出场动画 ========== */
   
-  /* SC 出场动画：白光闪现 + 缩放 */
-  .can-motion .event--superchat:nth-last-child(-n+2) {
+  /* SC、礼物、上舰 出场动画：白光闪现 + 缩放 */
+  .can-motion .event--superchat:nth-last-child(-n+2),
+  .can-motion .event--gift:nth-last-child(-n+2),
+  .can-motion .event--toast:nth-last-child(-n+2) {
     animation: sekiroFlash 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
