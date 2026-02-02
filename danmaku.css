@@ -17,6 +17,47 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     /* 修改此变量可以改变描边颜色，请据直播间配色进行微调 */
     --shadow-color: #000;
     --text-shadow: -2px -2px var(--shadow-color), -2px -1px var(--shadow-color), -2px 0px var(--shadow-color), -2px 1px var(--shadow-color), -2px 2px var(--shadow-color), -1px -2px var(--shadow-color), -1px -1px var(--shadow-color), -1px 0px var(--shadow-color), -1px 1px var(--shadow-color), -1px 2px var(--shadow-color), 0px -2px var(--shadow-color), 0px -1px var(--shadow-color), 0px 0px var(--shadow-color), 0px 1px var(--shadow-color), 0px 2px var(--shadow-color), 1px -2px var(--shadow-color), 1px -1px var(--shadow-color), 1px 0px var(--shadow-color), 1px 1px var(--shadow-color), 1px 2px var(--shadow-color), 2px -2px var(--shadow-color), 2px -1px var(--shadow-color), 2px 0px var(--shadow-color), 2px 1px var(--shadow-color), 2px 2px var(--shadow-color);
+
+    /* 礼物背景颜色变量 - 设置为 99% 不透明度 */
+    --event-gift-bg-1: rgba(55, 126, 224, 0.99);
+    --event-gift-bg-2: rgba(82, 183, 67, 0.99);
+    --event-gift-bg-3: rgba(255, 208, 67, 0.99);
+    --event-gift-bg-4: rgba(255, 145, 41, 0.99);
+    --event-gift-bg-5: rgba(242, 68, 68, 0.99);
+    --event-gift-bg-6: rgba(160, 0, 51, 0.99);
+    
+    /* 普通礼物背景颜色变量 - 设置为 99% 不透明度 */
+    --event-gift-normal-bg-1: rgba(55, 126, 224, 0.99);
+    --event-gift-normal-bg-2: rgba(82, 183, 67, 0.99);
+    --event-gift-normal-bg-3: rgba(255, 208, 67, 0.99);
+    --event-gift-normal-bg-4: rgba(255, 145, 41, 0.99);
+    --event-gift-normal-bg-5: rgba(242, 68, 68, 0.99);
+    --event-gift-normal-bg-6: rgba(160, 0, 51, 0.99);
+
+    /* 醒目留言（SC）背景颜色变量 - 设置为 99% 不透明度 */
+    --event-superchat-top-bg-1: rgba(16, 67, 255, 0.99);
+    --event-superchat-top-bg-2: rgba(16, 167, 255, 0.99);
+    --event-superchat-top-bg-3: rgba(255, 235, 16, 0.99);
+    --event-superchat-top-bg-4: rgba(255, 124, 16, 0.99);
+    --event-superchat-top-bg-5: rgba(255, 40, 16, 0.99);
+    --event-superchat-top-bg-6: rgba(255, 16, 64, 0.99);
+    
+    --event-superchat-bg: rgba(0, 0, 0, 0.99);
+    --event-superchat-bg-1: rgba(48, 42, 209, 0.99);
+    --event-superchat-bg-2: rgba(32, 137, 194, 0.99);
+    --event-superchat-bg-3: rgba(221, 159, 36, 0.99);
+    --event-superchat-bg-4: rgba(209, 117, 42, 0.99);
+    --event-superchat-bg-5: rgba(209, 59, 42, 0.99);
+    --event-superchat-bg-6: rgba(167, 16, 16, 0.99);
+
+    /* 舰长（Toast）背景颜色变量 - 设置为 99% 不透明度 */
+    --event-toast-text: rgb(0, 0, 0);
+    --event-toast-text-1: rgb(140, 0, 0);
+    --event-toast-text-2: rgb(118, 18, 152);
+    --event-toast-text-3: rgb(0, 56, 146);
+    --event-toast-bg-1: rgba(255, 185, 187, 0.99);
+    --event-toast-bg-2: rgba(250, 187, 255, 0.99);
+    --event-toast-bg-3: rgba(192, 216, 255, 0.99);
   }
 
   /* 2. 核心容器：父级 */
