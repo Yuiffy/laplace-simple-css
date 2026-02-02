@@ -208,134 +208,128 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       text-shadow: var(--text-shadow);
   }
 
-  /* ========== 礼物光泽特效 ========== */
+  /* ========== 通用光泽特效系统 ========== */
   
-  /* 小礼物：添加白色光泽扫过效果 */
-  .event--gift.event-size--normal {
-    position: relative;
-    overflow: hidden; /* 隐藏溢出的光泽 */
-  }
-
-  .event--gift.event-size--normal::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 25%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(255, 255, 255, 0.3) 75%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: skewX(-25deg);
-    animation: shineSmallGift 2.5s ease-in-out infinite;
-    pointer-events: none; /* 不影响点击 */
-    z-index: 100;
-  }
-
-  /* 大礼物：添加金色光泽扫过效果 */
-  .event--gift.event-size--highlight {
+  /* 为所有重要事件添加基础样式 */
+  .event--gift.event-size--normal,
+  .event--gift.event-size--highlight,
+  .event--toast,
+  .event--superchat,
+  .event--system {
     position: relative;
     overflow: hidden;
   }
 
-  .event--gift.event-size--highlight::after {
+  /* 统一光泽扫过效果 */
+  .event--gift.event-size--normal::after,
+  .event--gift.event-size--highlight::after,
+  .event--toast::after,
+  .event--superchat::after,
+  .event--system::after {
     content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 215, 0, 0) 0%,
-      rgba(255, 235, 100, 0.4) 20%,
-      rgba(255, 255, 200, 0.8) 50%,
-      rgba(255, 235, 100, 0.4) 80%,
-      rgba(255, 215, 0, 0) 100%
-    );
+    background: linear-gradient(90deg, 
+      rgba(255, 255, 255, 0) 0%, 
+      rgba(255, 255, 255, 0.4) 25%, 
+      rgba(255, 255, 255, 0.7) 50%, 
+      rgba(255, 255, 255, 0.4) 75%, 
+      rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
-    animation: shineBigGift 2s ease-in-out infinite;
+    animation: shine 2.5s ease-in-out infinite;
     pointer-events: none;
     z-index: 100;
   }
 
-  /* 小礼物光泽动画 */
-  @keyframes shineSmallGift {
-    0% {
-      left: -100%;
-    }
-    20% {
-      left: -100%;
-    }
-    50% {
-      left: 120%;
-    }
-    100% {
-      left: 120%;
-    }
-  }
-
-  /* 大礼物光泽动画（更快更频繁） */
-  @keyframes shineBigGift {
-    0% {
-      left: -100%;
-    }
-    15% {
-      left: -100%;
-    }
-    45% {
-      left: 120%;
-    }
-    100% {
-      left: 120%;
-    }
-  }
-
-  /* 增强大礼物的视觉效果：添加脉冲光晕 */
-  .event--gift.event-size--highlight::before {
+  /* 统一脉冲光晕（仅大礼物、上舰、SC） */
+  .event--gift.event-size--highlight::before,
+  .event--toast::before,
+  .event--superchat::before {
     content: "";
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    inset: -3px;
     background: inherit;
-    filter: blur(8px);
-    opacity: 0.6;
-    animation: giftPulse 2s ease-in-out infinite;
+    filter: blur(10px);
+    opacity: 0.5;
+    animation: pulse 2.5s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
   }
 
-  /* 脉冲动画 */
-  @keyframes giftPulse {
-    0%, 100% {
-      opacity: 0.4;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.02);
-    }
+  /* 统一动画定义 */
+  @keyframes shine {
+    0%, 20% { left: -100%; }
+    50% { left: 120%; }
+    100% { left: 120%; }
   }
 
-  /* 为礼物添加边框光效（可选） */
-  .event--gift.event-size--highlight {
-    box-shadow: 
-      0 0 10px rgba(255, 215, 0, 0.3),
-      0 0 20px rgba(255, 215, 0, 0.2),
-      inset 0 0 10px rgba(255, 255, 255, 0.1);
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.03); }
   }
 
-  .event--gift.event-size--normal {
-    box-shadow: 
-      0 0 8px rgba(255, 255, 255, 0.2),
-      inset 0 0 8px rgba(255, 255, 255, 0.05);
+  /* === 差异化配置 === */
+  
+  /* 小礼物：白色光泽 */
+  .event--gift.event-size--normal::after {
+    width: 50%;
+  }
+
+  /* 大礼物：金色光泽，更快 */
+  .event--gift.event-size--highlight::after {
+    background: linear-gradient(90deg, 
+      rgba(255, 215, 0, 0) 0%, 
+      rgba(255, 235, 100, 0.5) 25%, 
+      rgba(255, 255, 200, 0.8) 50%, 
+      rgba(255, 235, 100, 0.5) 75%, 
+      rgba(255, 215, 0, 0) 100%);
+    animation-duration: 2s;
+  }
+
+  /* 上舰：彩虹渐变 */
+  .event--toast::after {
+    background: linear-gradient(90deg, 
+      rgba(255, 185, 187, 0) 0%, 
+      rgba(250, 187, 255, 0.6) 35%, 
+      rgba(192, 216, 255, 0.8) 50%, 
+      rgba(250, 187, 255, 0.6) 65%, 
+      rgba(255, 185, 187, 0) 100%);
+    width: 70%;
+    animation-duration: 2.2s;
+  }
+
+  /* SC：红金渐变，最快最亮 */
+  .event--superchat::after {
+    background: linear-gradient(90deg, 
+      rgba(255, 100, 50, 0) 0%, 
+      rgba(255, 200, 100, 0.5) 25%, 
+      rgba(255, 255, 255, 0.9) 50%, 
+      rgba(255, 200, 100, 0.5) 75%, 
+      rgba(255, 100, 50, 0) 100%);
+    width: 70%;
+    animation-duration: 1.8s;
+  }
+
+  .event--superchat::before {
+    inset: -4px;
+    filter: blur(12px);
+    opacity: 0.7;
+    animation-duration: 1.8s;
+  }
+
+  /* 系统提示：蓝色光泽，较慢 */
+  .event--system::after {
+    background: linear-gradient(90deg, 
+      rgba(100, 150, 255, 0) 0%, 
+      rgba(150, 200, 255, 0.4) 25%, 
+      rgba(200, 230, 255, 0.6) 50%, 
+      rgba(150, 200, 255, 0.4) 75%, 
+      rgba(100, 150, 255, 0) 100%);
+    width: 50%;
+    animation-duration: 3s;
   }
 
   /* 8. 气泡小三角 */
