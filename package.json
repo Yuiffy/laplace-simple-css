@@ -1,13 +1,13 @@
 {
   "name": "laplace-simple-css",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "岁己同款弹幕气泡样式 - Laplace Chat 模板",
+  "main": "index.html",
   "scripts": {
     "dev": "npx serve .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "author": "带鱼",
+  "license": "ISC"
 }
