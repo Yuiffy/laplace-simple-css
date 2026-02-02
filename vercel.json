@@ -1,8 +1,10 @@
 {
   "version": 2,
   "public": true,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/$1" }
+  "builds": [
+    { "src": "danmaku.css", "use": "@vercel/static" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "public/**", "use": "@vercel/static" },
+    { "src": "引导模版.css", "use": "@vercel/static" }
   ]
 }
