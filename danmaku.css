@@ -131,8 +131,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
 
   /* 3. 头像：从 .meta 里“抓”出来 */
   /* 你的 HTML 里，真正的头像在 .meta .sender-avatar 里面 */
-  .event--message .meta .avatar--sender,
-  .event--gift .meta .avatar--sender {
+  .event--message:not(.event-show-as--sticky) .meta .avatar--sender,
+  .event--gift:not(.event-show-as--sticky) .meta .avatar--sender {
     position: absolute !important; /* 强制脱离文档流 */
     left: 2px !important;
     top: 0 !important;
@@ -146,8 +146,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 4. Meta 容器：包含名字和等级 */
-  .event--message .meta,
-  .event--gift .meta {
+  .event--message:not(.event-show-as--sticky) .meta,
+  .event--gift:not(.event-show-as--sticky) .meta {
     display: flex !important;
     align-items: center; /* 名字和等级垂直居中 */
     margin-bottom: 4px !important; /* 名字和气泡的间距 */
@@ -158,8 +158,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   }
 
   /* 5. 用户名样式 */
-  .event--message .username,
-  .event--gift .username {
+  .event--message:not(.event-show-as--sticky) .username,
+  .event--gift:not(.event-show-as--sticky) .username {
     display: block !important;
     
     /* 字体样式 */
@@ -316,20 +316,20 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   
   /* ========== 通用光泽特效系统 ========== */
   
-  /* 为所有重要事件添加基础样式 */
-  .event--gift.event-size--normal,
-  .event--gift.event-size--highlight,
-  .event--toast,
-  .event--superchat,
-  .event--system {
+  /* 为所有重要事件添加基础样式 (排除置顶) */
+  .event--gift.event-size--normal:not(.event-show-as--sticky),
+  .event--gift.event-size--highlight:not(.event-show-as--sticky),
+  .event--toast:not(.event-show-as--sticky),
+  .event--superchat:not(.event-show-as--sticky),
+  .event--system:not(.event-show-as--sticky) {
     position: relative;
     overflow: hidden;
   }
 
-  /* 统一光泽扫过效果 */
-  .event--gift.event-size--normal::after,
-  .event--gift.event-size--highlight::after,
-  .event--toast::after {
+  /* 统一光泽扫过效果 (排除置顶) */
+  .event--gift.event-size--normal:not(.event-show-as--sticky)::after,
+  .event--gift.event-size--highlight:not(.event-show-as--sticky)::after,
+  .event--toast:not(.event-show-as--sticky)::after {
     content: "";
     position: absolute;
     top: 0;
@@ -348,10 +348,10 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     z-index: 100;
   }
 
-  /* 统一脉冲光晕（仅大礼物、上舰、SC） */
-  .event--gift.event-size--highlight::before,
-  .event--toast::before,
-  .event--superchat::before {
+  /* 统一脉冲光晕 (排除置顶) */
+  .event--gift.event-size--highlight:not(.event-show-as--sticky)::before,
+  .event--toast:not(.event-show-as--sticky)::before,
+  .event--superchat:not(.event-show-as--sticky)::before {
     content: "";
     position: absolute;
     inset: -3px;
@@ -366,7 +366,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   /* 统一动画定义：12秒循环，约2秒扫完，剩下时间等待 */
   @keyframes shine {
     0% { left: -100%; }
-    16.6% { left: 120%; } /* 12s * 16.6% ≈ 2秒 */
+    12% { left: 120%; } /* 12s * 12% ≈ 1.4秒 */
     100% { left: 120%; }
   }
 
