@@ -218,8 +218,8 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
       text-shadow: var(--text-shadow);
   }
 
-  /* 大礼物 - 增加高度和内部间距 */
-  .event--gift.event-size--highlight {
+  /* 大礼物 - 增加高度和内部间距 (排除置顶礼物) */
+  .event--gift.event-size--highlight:not(.event-show-as--sticky) {
     padding-top: 32px !important;
     padding-bottom: 32px !important;
     padding-left: 32px !important;
@@ -231,11 +231,11 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     border-radius: 24px;
   }
 
-  .event--gift.event-size--highlight,
-  .event--gift.event-size--highlight .meta,
-  .event--gift.event-size--highlight .username,
-  .event--gift.event-size--highlight .message,
-  .event--gift.event-size--highlight * {
+  .event--gift.event-size--highlight:not(.event-show-as--sticky),
+  .event--gift.event-size--highlight:not(.event-show-as--sticky) .meta,
+  .event--gift.event-size--highlight:not(.event-show-as--sticky) .username,
+  .event--gift.event-size--highlight:not(.event-show-as--sticky) .message,
+  .event--gift.event-size--highlight:not(.event-show-as--sticky) * {
       /* 描边 */
       text-shadow: var(--text-shadow);
   }
