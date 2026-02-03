@@ -19,7 +19,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   
   /* 亮色模式下 */
   [data-theme='light'] {
-    --event-superchat-top-text: #ffffff;
+    /* --event-superchat-top-text: #ffffff; */
   }
 
   /* 全局事件变量 */
@@ -48,16 +48,16 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --danmaku-bubble-opacity: 0.98;
 
     /* 大礼物背景颜色变量 - 使用统一透明度变量 */
-    --event-gift-bg-1: rgba(55, 126, 224, var(--event-bg-opacity));
+    /* --event-gift-bg-1: rgba(55, 126, 224, var(--event-bg-opacity));
     --event-gift-bg-2: rgba(82, 183, 67, var(--event-bg-opacity));
     --event-gift-bg-3: rgba(255, 208, 67, var(--event-bg-opacity));
     --event-gift-bg-4: rgba(255, 145, 41, var(--event-bg-opacity));
     --event-gift-bg-5: rgba(242, 68, 68, var(--event-bg-opacity));
-    --event-gift-bg-6: rgba(160, 0, 51, var(--event-bg-opacity));
+    --event-gift-bg-6: rgba(160, 0, 51, var(--event-bg-opacity)); */
     
 
     /* 醒目留言（SC）背景颜色变量 - 使用统一透明度变量 */
-    --event-superchat-top-bg-1: rgba(16, 67, 255, var(--event-bg-opacity));
+    /* --event-superchat-top-bg-1: rgba(16, 67, 255, var(--event-bg-opacity));
     --event-superchat-top-bg-2: rgba(16, 167, 255, var(--event-bg-opacity));
     --event-superchat-top-bg-3: rgba(255, 235, 16, var(--event-bg-opacity));
     --event-superchat-top-bg-4: rgba(255, 124, 16, var(--event-bg-opacity));
@@ -70,16 +70,16 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-superchat-bg-3: rgba(221, 159, 36, var(--event-bg-opacity));
     --event-superchat-bg-4: rgba(209, 117, 42, var(--event-bg-opacity));
     --event-superchat-bg-5: rgba(209, 59, 42, var(--event-bg-opacity));
-    --event-superchat-bg-6: rgba(167, 16, 16, var(--event-bg-opacity));
+    --event-superchat-bg-6: rgba(167, 16, 16, var(--event-bg-opacity)); */
 
     /* 上舰的卡片（Toast）背景颜色变量 - 使用统一透明度变量 */
-    --event-toast-text: rgb(0, 0, 0);
+    /* --event-toast-text: rgb(0, 0, 0);
     --event-toast-text-1: rgb(140, 0, 0);
     --event-toast-text-2: rgb(118, 18, 152);
     --event-toast-text-3: rgb(0, 56, 146);
     --event-toast-bg-1: rgba(255, 185, 187, var(--event-bg-opacity));
     --event-toast-bg-2: rgba(250, 187, 255, var(--event-bg-opacity));
-    --event-toast-bg-3: rgba(192, 216, 255, var(--event-bg-opacity));
+    --event-toast-bg-3: rgba(192, 216, 255, var(--event-bg-opacity)); */
 
     /* 状态映射：将等级和身份映射到通用内部变量 */
     --bg: var(--event-danmaku-bg-0);
