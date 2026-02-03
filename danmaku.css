@@ -480,12 +480,12 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   .can-motion .event--superchat[data-uid="14279"]:nth-last-child(-n+2)::after,
   .can-motion .event--superchat[data-uid="412141275"]:nth-last-child(-n+2)::after {
     content: "危";
-    position: fixed; /* 使用 fixed 确保不受父元素影响 */
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     
-    font-size: 180px;
+    font-size: 140px;
     font-family: 'KaiTi', '楷体', 'STKaiti', 'BiauKai', serif;
     font-weight: bold;
     color: rgba(255, 0, 0, 1.0);
@@ -502,7 +502,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     pointer-events: none;
     
     /* 危字淡入淡出动画 */
-    animation: dangerFlash 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: dangerFlash 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0; /* 动画结束后隐藏 */
   }
   
@@ -510,23 +510,23 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
   @keyframes dangerFlash {
     0% {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
+      transform: translate(-50%, -50%) scale(0.4);
     }
     15% {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.2);
+      transform: translate(-50%, -50%) scale(1.0);
     }
     40% {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.8);
     }
     70% {
       opacity: 0.8;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.8);
     }
     100% {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.8);
+      transform: translate(-50%, -50%) scale(0.6);
     }
   }
 }
