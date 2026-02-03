@@ -502,7 +502,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     pointer-events: none;
     
     /* 危字淡入淡出动画 */
-    animation: dangerFlash 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation: dangerFlash 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0; /* 动画结束后隐藏 */
   }
   
