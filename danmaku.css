@@ -16,6 +16,11 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
 @layer template {
   /* 1. 全局背景透明 */
   body { background-color: rgba(0, 0, 0, 0); }
+  
+  /* 亮色模式下 */
+  [data-theme='light'] {
+    --event-superchat-top-text: #ffffff;
+  }
 
   /* 全局事件变量 */
   .event {
@@ -58,7 +63,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     --event-superchat-top-bg-4: rgba(255, 124, 16, var(--event-bg-opacity));
     --event-superchat-top-bg-5: rgba(255, 40, 16, var(--event-bg-opacity));
     --event-superchat-top-bg-6: rgba(255, 16, 64, var(--event-bg-opacity));
-    
+
     --event-superchat-bg: rgba(0, 0, 0, var(--event-bg-opacity));
     --event-superchat-bg-1: rgba(48, 42, 209, var(--event-bg-opacity));
     --event-superchat-bg-2: rgba(32, 137, 194, var(--event-bg-opacity));
