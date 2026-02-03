@@ -97,7 +97,7 @@ https://chat.laplace.live/obs/25788785?altDanmakuLayout=false&baseFontSize=28&co
     align-items: flex-start; /* 左对齐 */
     
     /* 【关键】左侧留出 56px 给头像，防止重叠 */
-    /* padding-left: 56px !important;  */
+    padding-left: 56px !important; 
     padding-top: 4px;
     padding-bottom: 8px;
     margin-bottom: 12px;
