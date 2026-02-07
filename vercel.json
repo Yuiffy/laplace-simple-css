@@ -1,8 +1,10 @@
 {
   "version": 2,
   "public": true,
+  "buildCommand": "cp danmaku.css d.css",
   "builds": [
     { "src": "danmaku.css", "use": "@vercel/static" },
+    { "src": "d.css", "use": "@vercel/static" },
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "public/**", "use": "@vercel/static" },
     { "src": "引导模版.css", "use": "@vercel/static" }
